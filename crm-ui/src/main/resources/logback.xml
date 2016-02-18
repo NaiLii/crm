@@ -1,0 +1,68 @@
+<configuration scan="true" scanPeriod="60 seconds">
+    <contextName>${project.artifactId}</contextName>
+    <property name="LOG_FILE_NAME" value="${project.artifactId}"/>
+    <if condition='isDefined("catalina.base")'>
+        <then>
+            <property name="LOG_HOME" value="${catalina.base}/logs"/>
+        </then>
+        <else>
+            <property name="LOG_HOME" value="target/logs"/>
+        </else>
+    </if>
+    <statusListener class="ch.qos.logback.core.status.OnConsoleStatusListener"/>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%date{yyyy-MM-dd HH:mm:ss.SSS} [%thread] [%-5level] [%logger{36}.%method:%line] - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="ERROR-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+
+        <file>${LOG_HOME}/${LOG_FILE_NAME}.error.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/${LOG_FILE_NAME}.error.log-%d{yyyy-MM-dd}</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%date{yyyy-MM-dd HH:mm:ss.SSS} [%thread] [%-5level] [%logger{36}.%method:%line] - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>DENY</onMatch>
+            <onMismatch>ACCEPT</onMismatch>
+        </filter>
+
+        <file>${LOG_HOME}/${LOG_FILE_NAME}.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/${LOG_FILE_NAME}.log-%d{yyyy-MM-dd}</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%date{yyyy-MM-dd HH:mm:ss.SSS} [%thread] [%-5level] [%logger{36}.%method:%line] - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="ASYNC-FILE" class="ch.qos.logback.classic.AsyncAppender">
+        <discardingThreshold>0</discardingThreshold>
+        <queueSize>4096</queueSize>
+        <appender-ref ref="FILE" level="DEBUG"/>
+    </appender>
+
+    <logger name="net.gddata" level="DEBUG"></logger>
+    <logger name="org.jooq" level="DEBUG"></logger>
+
+    <root level="ERROR">
+        <appender-ref ref="STDOUT" level="ERROR"/>
+        <appender-ref ref="ERROR-FILE" level="ERROR"/>
+        <appender-ref ref="FILE" level="DEBUG"/>
+    </root>
+</configuration>

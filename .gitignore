@@ -1,0 +1,13 @@
+/build
+target/
+/.idea
+*.iml
+.DS_Store
+widgetsets/
+local.properties
+release.properties
+*.releaseBackup
+*.scss.cache
+/ExactTextFromOaddsdatabase
+/testOaddsPlagiarism
+qqconnect.log*
