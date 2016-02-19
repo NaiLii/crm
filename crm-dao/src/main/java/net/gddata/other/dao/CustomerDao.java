@@ -20,4 +20,20 @@ public class CustomerDao extends JooqDao<CustomerRecord, Customer, Integer> {
     protected Integer getId(Customer customer) {
         return customer.getId();
     }
+
+    public Customer detail(Integer id){
+        return create()
+                .selectFrom(CUSTOMER)
+                .where(CUSTOMER.ID.eq(id))
+                .fetchOne()
+                .into(Customer.class);
+    }
+
+    public Customer add(Customer customer){
+        CustomerRecord record  = create().newRecord(CUSTOMER);
+        record.from(customer);
+        record.insert();
+        customer.setId(record.getId());
+        return customer;
+    }
 }

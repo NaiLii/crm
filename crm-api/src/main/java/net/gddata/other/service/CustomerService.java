@@ -7,4 +7,5 @@ import net.gddata.other.core.Customer;
  */
 public interface CustomerService {
     Customer detail(Integer id);
+    Customer addCustomer(Customer customer);
 }

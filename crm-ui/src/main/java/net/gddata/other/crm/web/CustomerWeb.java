@@ -2,15 +2,13 @@ package net.gddata.other.crm.web;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import net.gddata.other.core.Customer;
 import net.gddata.other.service.CustomerService;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
 /**
@@ -30,5 +28,12 @@ public class CustomerWeb extends WebPage {
     @ApiOperation(value="客户详情", notes="一条客户的详情")
     public Customer detail(@PathParam("id") Integer id){
         return customerService.detail(id);
+    }
+
+    @POST
+    @Path("add")
+    @ApiOperation(value="新增客户", notes="新增客户")
+    public Customer add(@ApiParam("customer") Customer customer){
+        return customerService.addCustomer(customer);
     }
 }

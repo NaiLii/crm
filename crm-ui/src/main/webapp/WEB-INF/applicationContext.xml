@@ -20,11 +20,11 @@
     <!-- Swagger Configuration -->
     <bean id="beanConfig" class="io.swagger.jaxrs.config.BeanConfig">
         <property name="schemes" value="http"/>
-        <property name="filterClass" value="net.gddata.hicds.helper.ApiAuthorizationFilterImpl"/>
-        <property name="resourcePackage" value="net.gddata.hicds.helper.web"/>
+        <property name="filterClass" value="net.gddata.other.crm.ApiAuthorizationFilterImpl"/>
+        <property name="resourcePackage" value="net.gddata.other.crm.web"/>
         <property name="version" value="1.0.0"/>
         <property name="basePath" value="/api"/>
-        <property name="title" value="Helper"/>
+        <property name="title" value="CRM"/>
         <property name="scan" value="true"/>
     </bean>
 
