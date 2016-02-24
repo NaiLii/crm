@@ -18,4 +18,5 @@ public class Customer {
     private String telephone; //电话
     private String email;//邮箱
     private Date enroll;//注册日期
+    private String user;//所属用户
 }

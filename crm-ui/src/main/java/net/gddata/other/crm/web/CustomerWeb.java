@@ -10,13 +10,14 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.List;
 
 /**
  * Created by knix on 16/2/17.
  */
 
 @Path("/customer")
-@Api(value="", description = "")
+@Api(value="客户", description = "客户")
 @Produces(MediaType.APPLICATION_JSON)
 @Component
 public class CustomerWeb extends WebPage {
@@ -28,6 +29,13 @@ public class CustomerWeb extends WebPage {
     @ApiOperation(value="客户详情", notes="一条客户的详情")
     public Customer detail(@PathParam("id") Integer id){
         return customerService.detail(id);
+    }
+
+    @GET
+    @Path("my")
+    @ApiOperation(value="我的客户", notes="我的客户")
+    public List<Customer> my(){
+        return customerService.my();
     }
 
     @POST

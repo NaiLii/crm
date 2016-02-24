@@ -4,6 +4,9 @@ import net.gddata.other.crm.tables.records.CustomerRecord;
 import net.gddata.other.dao.factory.JooqDao;
 import org.springframework.stereotype.Component;
 import net.gddata.other.core.Customer;
+import sun.util.resources.cldr.so.CurrencyNames_so;
+
+import java.util.List;
 
 import static net.gddata.other.crm.tables.Customer.CUSTOMER;
 
@@ -35,5 +38,13 @@ public class CustomerDao extends JooqDao<CustomerRecord, Customer, Integer> {
         record.insert();
         customer.setId(record.getId());
         return customer;
+    }
+
+    public List<Customer> byUser(String uid){
+        return create()
+                .selectFrom(CUSTOMER)
+                .where(CUSTOMER.USER.eq(uid))
+                .fetch()
+                .into(Customer.class);
     }
 }

@@ -5,6 +5,7 @@ import net.gddata.other.dao.CustomerDao;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * Created by knix on 16/2/17.
@@ -23,5 +24,11 @@ public class CustomerImpl implements CustomerService {
     @Override
     public Customer addCustomer(Customer customer) {
         return customerDao.add(customer);
+    }
+
+    @Override
+    public List<Customer> my() {
+        String user = "lls";
+        return customerDao.byUser(user);
     }
 }
