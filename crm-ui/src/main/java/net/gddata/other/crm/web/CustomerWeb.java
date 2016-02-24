@@ -42,6 +42,7 @@ public class CustomerWeb extends WebPage {
     @Path("add")
     @ApiOperation(value="新增客户", notes="新增客户")
     public Customer add(@ApiParam("customer") Customer customer){
+        customer.setUser("lls");
         return customerService.addCustomer(customer);
     }
 }
