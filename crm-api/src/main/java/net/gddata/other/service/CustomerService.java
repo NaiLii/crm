@@ -9,6 +9,8 @@ import java.util.List;
  */
 public interface CustomerService {
     Customer detail(Integer id);
-    Customer addCustomer(Customer customer);
+    Customer add(Customer customer);
+    void update(Customer customer);
+    void delete(Integer cid);
     List<Customer> my();
 }

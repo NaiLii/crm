@@ -4,6 +4,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import net.gddata.other.core.Customer;
+import net.gddata.other.dao.CustomerDao;
 import net.gddata.other.service.CustomerService;
 import org.springframework.stereotype.Component;
 
@@ -43,6 +44,13 @@ public class CustomerWeb extends WebPage {
     @ApiOperation(value="新增客户", notes="新增客户")
     public Customer add(@ApiParam("customer") Customer customer){
         customer.setUser("lls");
-        return customerService.addCustomer(customer);
+        return customerService.add(customer);
+    }
+
+    @PUT
+    @Path("update")
+    @ApiOperation(value="", notes="")
+    public void update(@ApiParam("customer") Customer customer){
+        customerService.update(customer);
     }
 }
