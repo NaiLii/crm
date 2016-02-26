@@ -54,4 +54,9 @@ public class CustomerImpl implements CustomerService {
         String user = "lls";
         return customerDao.byUser(user);
     }
+
+    @Override
+    public List<Customer> search(String keyword) {
+        return customerDao.search(keyword);
+    }
 }

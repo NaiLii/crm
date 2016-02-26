@@ -12,5 +12,7 @@ public interface CustomerService {
     Customer add(Customer customer);
     void update(Customer customer);
     void delete(Integer cid);
+
     List<Customer> my();
+    List<Customer> search(String keyword);
 }

@@ -53,4 +53,11 @@ public class CustomerWeb extends WebPage {
     public void update(@ApiParam("customer") Customer customer){
         customerService.update(customer);
     }
+
+    @GET
+    @Path("search")
+    @ApiOperation(value="搜索我的用户", notes="搜索我的用户")
+    public List<Customer> search(@QueryParam("key") String key){
+        return customerService.search(key);
+    }
 }
