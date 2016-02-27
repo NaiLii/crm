@@ -3,12 +3,10 @@ package net.gddata.other.core;
 import lombok.Data;
 
 /**
- * Created by knix on 16/2/19.
+ * Created by knix on 16/2/27.
  */
 @Data
-public class User {
-    private Integer id;
+public class LoginForm {
     private String username;
     private String password;
-    private int level;
 }
