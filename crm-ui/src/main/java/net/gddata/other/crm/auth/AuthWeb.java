@@ -1,20 +1,22 @@
 package net.gddata.other.crm.auth;
 
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import net.gddata.other.core.LoginForm;
+import net.gddata.other.core.User;
+import net.gddata.other.core.auth.AuthClient;
+import net.gddata.other.core.auth.AuthService;
+import net.gddata.other.service.UserService;
 import org.apache.shiro.authz.annotation.RequiresGuest;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,6 +30,12 @@ import java.util.Map;
 @Produces(MediaType.APPLICATION_JSON)
 @Component
 public class AuthWeb {
+    @Resource
+    AuthService authService;
+
+    @Resource
+    UserService userService;
+
 
     @POST
     @Path("login")
@@ -36,16 +44,19 @@ public class AuthWeb {
     @ApiOperation(value = "获取认证令牌", notes = "获取认证令牌")
     public Map login(@ApiParam LoginForm loginForm) {
 
-        String compact = Jwts.builder()
-                .setSubject(loginForm.getUsername())
-                .claim("roles", "admin")
-                .setIssuedAt(new Date())
-                .signWith(SignatureAlgorithm.HS256, "secretkey")
-                .compact();
-        System.out.println(compact);
+        String username = loginForm.getUsername();
+        String password = loginForm.getPassword();
+
+        User user = userService.loginByPassword(username, password);
+
+        AuthClient authClient = authService.login(user);
         Map map = new HashMap<>();
-        map.put("status", 200);
-        map.put("token", compact);
+        if (null != user) {
+            map.put("token", authClient.getToken());
+            map.put("status", "200");
+        } else {
+            map.put("status", "400");
+        }
         return map;
     }
 }

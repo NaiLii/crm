@@ -7,4 +7,5 @@ import net.gddata.other.core.User;
  */
 public interface UserService {
     User findByUserName(String username);
+    User loginByPassword(String username, String password);
 }
