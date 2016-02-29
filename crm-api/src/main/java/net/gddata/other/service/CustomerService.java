@@ -13,6 +13,6 @@ public interface CustomerService {
     void update(Customer customer);
     void delete(Integer cid);
 
-    List<Customer> my();
-    List<Customer> search(String keyword);
+    List<Customer> my(String userId);
+    List<Customer> search(String keyword, String userId);
 }

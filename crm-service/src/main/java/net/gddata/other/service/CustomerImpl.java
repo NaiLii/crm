@@ -50,13 +50,12 @@ public class CustomerImpl implements CustomerService {
     }
 
     @Override
-    public List<Customer> my() {
-        String user = "lls";
-        return customerDao.byUser(user);
+    public List<Customer> my(String userId) {
+        return customerDao.byUser(userId);
     }
 
     @Override
-    public List<Customer> search(String keyword) {
-        return customerDao.search(keyword);
+    public List<Customer> search(String keyword,String userId) {
+        return customerDao.search(keyword, userId);
     }
 }

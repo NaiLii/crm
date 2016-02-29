@@ -18,7 +18,7 @@ public class UserDao extends JooqDao<UserRecord, User, Integer> {
     }
     @Override
     protected Integer getId(User user) {
-        return user.getId();
+        return 0;
     }
 
     public User loginByPassword(String username, String password){

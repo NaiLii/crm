@@ -1,5 +1,6 @@
 package net.gddata.other.service.util;
 
+import lombok.extern.slf4j.Slf4j;
 import net.sourceforge.pinyin4j.PinyinHelper;
 import net.sourceforge.pinyin4j.format.HanyuPinyinCaseType;
 import net.sourceforge.pinyin4j.format.HanyuPinyinOutputFormat;
@@ -10,6 +11,7 @@ import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombi
 /**
  * Created by knix on 16/2/25.
  */
+@Slf4j
 public class CustomerName {
     public static String getPingYin(String src) {
 

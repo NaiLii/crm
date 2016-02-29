@@ -20,6 +20,8 @@ import javax.ws.rs.core.MediaType;
 import java.util.HashMap;
 import java.util.Map;
 
+import static net.gddata.other.crm.Util.SecretKey.getBase64Key;
+
 /**
  * Created by knix on 16/2/27.
  */
@@ -48,15 +50,16 @@ public class AuthWeb {
         String password = loginForm.getPassword();
 
         User user = userService.loginByPassword(username, password);
-
-        AuthClient authClient = authService.login(user);
         Map map = new HashMap<>();
         if (null != user) {
+            String base64KeyStr = getBase64Key();
+            AuthClient authClient = authService.login(user, base64KeyStr);
             map.put("token", authClient.getToken());
             map.put("status", "200");
         } else {
             map.put("status", "400");
         }
         return map;
+
     }
 }

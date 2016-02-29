@@ -39,18 +39,19 @@ public class CustomerDao extends JooqDao<CustomerRecord, Customer, Integer> {
         return customer;
     }
 
-    public List<Customer> byUser(String uid) {
+    public List<Customer> byUser(String userId) {
         return create()
                 .selectFrom(CUSTOMER)
-                .where(CUSTOMER.USER.eq(uid))
+                .where(CUSTOMER.USER.eq(userId))
                 .fetch()
                 .into(Customer.class);
     }
 
-    public List<Customer> search(String keyword) {
+    public List<Customer> search(String keyword, String userId) {
         return create()
                 .selectFrom(CUSTOMER)
-                .where(CUSTOMER.NAME.like("%" + keyword + "%"))
+                .where(CUSTOMER.NAME.like("%" + keyword + "%")
+                        .and(CUSTOMER.USER.eq(userId)))
                 .limit(100)
                 .fetch()
                 .into(Customer.class);
