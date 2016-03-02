@@ -25,7 +25,9 @@ public class AuthServiceImpl implements AuthService {
         builder.setSubject(user.getUserId());
         builder.setExpiration(new Date(System.currentTimeMillis() + 3600 * 1000));
         builder.setIssuedAt(new Date());
-        String accessToken = builder.signWith(SignatureAlgorithm.HS256, base64KeyStr).compact(
+        String accessToken = builder
+                .signWith(SignatureAlgorithm.HS256, base64KeyStr)
+                .compact();
         authClient.setToken(accessToken);
         authClient.setUserId(user.getUserId());
         return authClient;

@@ -32,7 +32,7 @@ public class Token {
                     .parseClaimsJws(token)
                     .getBody();
             return claims.getSubject();
-        } catch (final SignatureException e) {
+        } catch (Exception e) {
             return "";
         }
     }
