@@ -81,4 +81,15 @@ public class CustomerWeb extends WebPage {
         }
         return null;
     }
+
+    @GET
+    @Path("willbirthday")
+    @ApiOperation(value="获取即将过生日的客户", notes="获取即将过生日的客户")
+    public List<Customer> willBirthday(@Context HttpServletRequest request){
+        String userId = getUserId(request);
+        if(!userId.equals("")){
+            return customerService.search("",userId);
+        }
+        return null;
+    }
 }

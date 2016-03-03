@@ -5,6 +5,7 @@ import net.gddata.other.crm.tables.records.CustomerRecord;
 import net.gddata.other.dao.factory.JooqDao;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.List;
 
 import static net.gddata.other.crm.tables.Customer.CUSTOMER;
@@ -52,6 +53,22 @@ public class CustomerDao extends JooqDao<CustomerRecord, Customer, Integer> {
                 .selectFrom(CUSTOMER)
                 .where(CUSTOMER.NAME.like("%" + keyword + "%")
                         .and(CUSTOMER.USER.eq(userId)))
+                .limit(100)
+                .fetch()
+                .into(Customer.class);
+    }
+
+    public List<Customer> willBirthday(String userId) {
+        long time = new Date().getTime();
+        java.sql.Date date = new java.sql.Date(time);
+        //// TODO: 16/3/3 不能直接计算大于小于...
+        java.sql.Date afterMonth = new java.sql.Date(time + 3600 * 24 * 30 * 1000);
+        return create()
+                .selectFrom(CUSTOMER)
+                .where(CUSTOMER.USER.eq(userId)
+                        .and(CUSTOMER.BIRTHDAY.gt(date))
+                        .and(CUSTOMER.BIRTHDAY.lt(afterMonth)))
+                .orderBy(CUSTOMER.BIRTHDAY.asc())
                 .limit(100)
                 .fetch()
                 .into(Customer.class);

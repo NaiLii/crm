@@ -58,4 +58,9 @@ public class CustomerImpl implements CustomerService {
     public List<Customer> search(String keyword,String userId) {
         return customerDao.search(keyword, userId);
     }
+
+    @Override
+    public List<Customer> willBirthday(String userId) {
+        return customerDao.willBirthday(userId);
+    }
 }

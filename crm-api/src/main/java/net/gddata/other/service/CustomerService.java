@@ -15,4 +15,5 @@ public interface CustomerService {
 
     List<Customer> my(String userId);
     List<Customer> search(String keyword, String userId);
+    List<Customer> willBirthday(String userId);
 }
