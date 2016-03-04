@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import java.util.Date;
 import java.util.List;
 
 import static net.gddata.other.crm.Util.Token.getUserId;
@@ -54,6 +55,7 @@ public class CustomerWeb extends WebPage {
         String userId = getUserId(request);
         if (!userId.equals("")) {
             customer.setUser(userId);
+
             return customerService.add(customer);
         }
         return null;
@@ -84,11 +86,11 @@ public class CustomerWeb extends WebPage {
 
     @GET
     @Path("willbirthday")
-    @ApiOperation(value="获取即将过生日的客户", notes="获取即将过生日的客户")
-    public List<Customer> willBirthday(@Context HttpServletRequest request){
+    @ApiOperation(value = "获取即将过生日的客户", notes = "获取即将过生日的客户")
+    public List<Customer> willBirthday(@Context HttpServletRequest request) {
         String userId = getUserId(request);
-        if(!userId.equals("")){
-            return customerService.search("",userId);
+        if (!userId.equals("")) {
+            return customerService.search("", userId);
         }
         return null;
     }

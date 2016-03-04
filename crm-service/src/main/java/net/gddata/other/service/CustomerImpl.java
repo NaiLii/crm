@@ -29,6 +29,11 @@ public class CustomerImpl implements CustomerService {
 
         String letter = getPingYin(customer.getName());
         customer.setLetter(letter);
+        Date birthday = customer.getBirthday();
+        if (null != customer.getBirthday()) {
+            String md = new java.text.SimpleDateFormat("MMdd").format(birthday);
+            customer.setMonthDay(md);
+        }
         Date date = new Date();
         customer.setEnroll(date);
         return customerDao.add(customer);
@@ -40,6 +45,12 @@ public class CustomerImpl implements CustomerService {
         if (null == letter || letter.equals("")) {
             String py = getPingYin(customer.getName());
             customer.setLetter(py);
+
+        }
+        Date birthday = customer.getBirthday();
+        if (null != customer.getBirthday()) {
+            String md = new java.text.SimpleDateFormat("MMdd").format(birthday);
+            customer.setMonthDay(md);
         }
         customerDao.update(customer);
     }
@@ -55,7 +66,7 @@ public class CustomerImpl implements CustomerService {
     }
 
     @Override
-    public List<Customer> search(String keyword,String userId) {
+    public List<Customer> search(String keyword, String userId) {
         return customerDao.search(keyword, userId);
     }
 
