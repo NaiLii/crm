@@ -14,6 +14,7 @@
         <module>crm-service</module>
         <module>crm-ui</module>
         <module>crm-parent</module>
+        <module>tools</module>
     </modules>
 
 
