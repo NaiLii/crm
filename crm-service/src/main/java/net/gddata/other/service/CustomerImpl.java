@@ -2,7 +2,7 @@ package net.gddata.other.service;
 
 import net.gddata.other.core.Customer;
 import net.gddata.other.dao.CustomerDao;
-import net.gddata.other.tools.DateTime.Format;
+import net.gddata.other.tools.DateTime.Calculate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -30,11 +30,10 @@ public class CustomerImpl implements CustomerService {
 
         String letter = getPingYin(customer.getName());
         customer.setLetter(letter);
+        //todo
         Date birthday = customer.getBirthday();
-        String monthDay = net.gddata.other.tools.DateTime.Format.toString(birthday, "MMdd");
-        customer.setMonthDay(monthDay);
-        Date date = new Date();
-        customer.setEnroll(date);
+        customer.setHappyDay(Calculate.getTodayOfYear(birthday));
+        customer.setEnroll(new Date());
         return customerDao.add(customer);
     }
 
@@ -46,7 +45,7 @@ public class CustomerImpl implements CustomerService {
             customer.setLetter(py);
         }
         Date birthday = customer.getBirthday();
-        customer.setMonthDay(Format.toString(birthday, "MMdd"));
+        customer.setHappyDay(Calculate.getTodayOfYear(birthday));
         customerDao.update(customer);
     }
 

@@ -3,8 +3,10 @@ package net.gddata.other.dao;
 import net.gddata.other.core.Customer;
 import net.gddata.other.crm.tables.records.CustomerRecord;
 import net.gddata.other.dao.factory.JooqDao;
+import net.gddata.other.tools.DateTime.Calculate;
 import org.springframework.stereotype.Component;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -41,11 +43,26 @@ public class CustomerDao extends JooqDao<CustomerRecord, Customer, Integer> {
     }
 
     public List<Customer> byUser(String userId) {
-        return create()
+        List<Customer> list = create()
                 .selectFrom(CUSTOMER)
                 .where(CUSTOMER.USER.eq(userId))
                 .fetch()
                 .into(Customer.class);
+        Date date = new Date();
+
+        int today = Calculate.getTodayOfYear(date);
+        int nextMonthToday = Calculate.getNextMonthDayOfYear(date);
+
+        if (nextMonthToday < today) {
+            nextMonthToday += 365;
+        }
+        for (Customer c : list) {
+            int birthDay = c.getHappyDay();
+            if (today <= birthDay && nextMonthToday >= birthDay) {
+                c.setWillBirthday(true);
+            }
+        }
+        return list;
     }
 
     public List<Customer> search(String keyword, String userId) {
@@ -59,17 +76,17 @@ public class CustomerDao extends JooqDao<CustomerRecord, Customer, Integer> {
     }
 
     public List<Customer> willBirthday(String userId) {
-        long time = new Date().getTime();
-        java.sql.Date date = new java.sql.Date(time);
-        //// TODO: 16/3/3 不能直接计算大于小于...
-        java.sql.Date afterMonth = new java.sql.Date(time + 3600 * 24 * 30 * 1000);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        int today = calendar.get(Calendar.DAY_OF_YEAR);
+        calendar.add(Calendar.MONTH, 1);
+        int i = calendar.get(Calendar.DAY_OF_YEAR);
         return create()
                 .selectFrom(CUSTOMER)
                 .where(CUSTOMER.USER.eq(userId)
-                        .and(CUSTOMER.BIRTHDAY.gt(date))
-                        .and(CUSTOMER.BIRTHDAY.lt(afterMonth)))
-                .orderBy(CUSTOMER.BIRTHDAY.asc())
-                .limit(100)
+                        .and(CUSTOMER.HAPPY_DAY.lt(i))
+                        .and(CUSTOMER.HAPPY_DAY.lt(today)))
+                .orderBy(CUSTOMER.HAPPY_DAY.asc())
                 .fetch()
                 .into(Customer.class);
     }
