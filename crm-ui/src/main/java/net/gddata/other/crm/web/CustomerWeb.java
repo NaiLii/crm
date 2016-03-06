@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
-import java.util.Date;
 import java.util.List;
 
 import static net.gddata.other.crm.Util.Token.getUserId;

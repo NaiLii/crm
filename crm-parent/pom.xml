@@ -41,8 +41,8 @@
         <jdbc.host>58.30.138.200</jdbc.host>
         <jdbc.url>jdbc:mysql://${jdbc.host}:${jdbc.port}</jdbc.url>
         <jdbc.port>12336</jdbc.port>
-        <jdbc.username>root</jdbc.username>
-        <jdbc.password>Gdhicds903</jdbc.password>
+        <jdbc.username>crm</jdbc.username>
+        <jdbc.password>crm</jdbc.password>
     </properties>
     <dependencyManagement>
         <dependencies>

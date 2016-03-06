@@ -30,7 +30,6 @@ public class CustomerImpl implements CustomerService {
 
         String letter = getPingYin(customer.getName());
         customer.setLetter(letter);
-        //todo
         Date birthday = customer.getBirthday();
         customer.setHappyDay(Calculate.getTodayOfYear(birthday));
         customer.setEnroll(new Date());

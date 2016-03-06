@@ -2,7 +2,6 @@ package net.gddata.other.crm.Util;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureException;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -19,7 +18,7 @@ public class Token {
             return "";
         }
 
-        if(authHeader.length()<=7){
+        if (authHeader.length() <= 7) {
             return "";
         }
         final String token = authHeader.substring(7); // The part after "Bearer "
