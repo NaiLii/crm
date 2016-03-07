@@ -16,9 +16,6 @@ import java.util.List;
 
 import static net.gddata.other.crm.Util.Token.getUserId;
 
-/**
- * Created by knix on 16/2/17.
- */
 
 @Path("/customer")
 @Api(value = "客户", description = "客户")

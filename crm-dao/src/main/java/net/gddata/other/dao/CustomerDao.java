@@ -6,6 +6,7 @@ import net.gddata.other.dao.factory.JooqDao;
 import net.gddata.other.tools.DateTime.Calculate;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -76,18 +77,40 @@ public class CustomerDao extends JooqDao<CustomerRecord, Customer, Integer> {
     }
 
     public List<Customer> willBirthday(String userId) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(new Date());
-        int today = calendar.get(Calendar.DAY_OF_YEAR);
-        calendar.add(Calendar.MONTH, 1);
-        int i = calendar.get(Calendar.DAY_OF_YEAR);
-        return create()
+        List<Customer> into = create()
                 .selectFrom(CUSTOMER)
-                .where(CUSTOMER.USER.eq(userId)
-                        .and(CUSTOMER.HAPPY_DAY.lt(i))
-                        .and(CUSTOMER.HAPPY_DAY.lt(today)))
-                .orderBy(CUSTOMER.HAPPY_DAY.asc())
+                .where(CUSTOMER.USER.eq(userId))
                 .fetch()
                 .into(Customer.class);
+        Date now = new Date();
+        List<Customer> ret = new ArrayList<>();
+        for (Customer c : into) {
+            Date d = c.getBirthday();
+            Integer today = Calculate.getTodayOfYear(now);
+            Integer afterMonth = Calculate.getNextMonthDayOfYear(now);
+            Integer cd = Calculate.getTodayOfYear(d);
+            if (cd >= today && afterMonth >= cd) {
+                if(cd<today){
+                    Calendar instance = Calendar.getInstance();
+                    instance.setTime(d);
+                    instance.add(Calendar.YEAR,1);
+                    c.setHappyDay(instance.get(Calendar.DAY_OF_YEAR));
+                }
+                ret.add(c);
+            }
+        }
+//        into.stream().filter(c->{
+//                    Date d = c.getBirthday();
+//                    Integer today = Calculate.getTodayOfYear(now);
+//                    Integer afterMonth = Calculate.getNextMonthDayOfYear(now);
+//                    Integer cd = Calculate.getTodayOfYear(d);
+//                    if(cd>=today && afterMonth>=cd){
+//                        return c;
+//                    }
+//                })
+//                .forEach(c->{
+//                    ret.add(c);
+//                });
+        return ret;
     }
 }
