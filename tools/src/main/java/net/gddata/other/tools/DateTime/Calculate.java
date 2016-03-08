@@ -1,5 +1,6 @@
 package net.gddata.other.tools.DateTime;
 
+import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -21,6 +22,7 @@ public class Calculate {
         }
         return i;
     }
+
     public static int getNextMonthDayOfYear(Date date) {
         int i = -1;
         if (null == date) {
@@ -28,12 +30,35 @@ public class Calculate {
         }
         try {
             Calendar calendar = date2Calendar(date);
-            calendar.add(Calendar.MONTH,1);
+            calendar.add(Calendar.MONTH, 1);
             i = calendar.get(Calendar.DAY_OF_YEAR);
 
         } catch (Exception e) {
             //e.printStackTrace();
         }
         return i;
+    }
+
+    public static Timestamp TomonthFirstDay() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DATE, 1);
+        calendar.set(Calendar.HOUR, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+
+        return new Timestamp(calendar.getTime().getTime());
+    }
+
+    public static Timestamp NextMonthFirstDay() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.MONTH, 1);
+        calendar.set(Calendar.DATE, 1);
+        calendar.set(Calendar.HOUR, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+
+        return new Timestamp(calendar.getTime().getTime());
     }
 }

@@ -1,5 +1,6 @@
 package net.gddata.other.tools.DateTime;
 
+import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -16,5 +17,14 @@ public class Translate {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         return calendar;
+    }
+    public static Timestamp Date2Timestamp(Date date){
+        return new Timestamp(date.getTime());
+    }
+    public static Timestamp Calenader2Timestamp(Calendar calendar){
+        return new Timestamp(calendar.getTime().getTime());
+    }
+    public static Timestamp Long2Timestamp(Long l){
+        return new Timestamp(l);
     }
 }
