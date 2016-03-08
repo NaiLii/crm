@@ -5,10 +5,12 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import net.gddata.other.core.Customer;
 import net.gddata.other.service.CustomerService;
+import org.apache.shiro.authz.UnauthorizedException;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -35,10 +37,12 @@ public class CustomerWeb extends WebPage {
     @GET
     @Path("my")
     @ApiOperation(value = "我的客户", notes = "我的客户")
-    public List<Customer> my(@Context HttpServletRequest request) {
+    public List<Customer> my(@Context HttpServletRequest request,
+                             @Context HttpServletResponse response) {
         String userId = getUserId(request);
         if (userId.equals("")) {
-            return null;
+            // TODO: 16/3/8 如何返回未授权的异常?
+            //response.setStatus(401);
         }
         return customerService.my(userId);
     }

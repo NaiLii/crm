@@ -31,4 +31,20 @@ public class UserDao extends JooqDao<UserRecord, User, Integer> {
         }
         return null;
     }
+
+    public User findByUserName(String username){
+        return create()
+                .selectFrom(USER)
+                .where(USER.USERNAME.eq(username))
+                .fetchOne()
+                .into(User.class);
+    }
+
+    public User findByUserId(String userId){
+        return create()
+                .selectFrom(USER)
+                .where(USER.USERNAME.eq(userId))
+                .fetchOne()
+                .into(User.class);
+    }
 }
