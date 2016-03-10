@@ -6,9 +6,6 @@ import org.apache.commons.lang.StringUtils;
 
 import java.io.InputStream;
 
-/**
- * Created by knix on 16/3/10.
- */
 public class Property {
     public static Configuration getConfig(String name) {
         if (StringUtils.isEmpty(name)) {

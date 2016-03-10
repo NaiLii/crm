@@ -4,10 +4,6 @@ import lombok.Data;
 
 import java.util.Date;
 
-
-/**
- * Created by knix on 16/2/17.
- */
 @Data
 public class Customer {
     private Integer id;
