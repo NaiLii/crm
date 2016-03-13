@@ -6,9 +6,6 @@ import java.util.Date;
 
 import static net.gddata.other.tools.DateTime.Translate.date2Calendar;
 
-/**
- * Created by knix on 16/3/6.
- */
 public class Calculate {
     public static int getTodayOfYear(Date date) {
         int i = -1;
